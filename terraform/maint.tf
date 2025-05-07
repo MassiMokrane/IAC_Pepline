@@ -21,7 +21,7 @@ resource "random_id" "commit_simulation" {
 }
 
 resource "aws_instance" "demo" {
-  ami           = "ami-${random_id.commit_simulation.hex}" # fictif mais uniquejbj
+  ami           = "ami-${random_id.commit_simulation.hex}" # fictif mais uniquejbjjkbbijbjk
   instance_type = "t2.micro"
 
   tags = {
