@@ -18,7 +18,7 @@ provider "aws" {
 }
 
 resource "aws_instance" "demo" {
-  ami           = "ami-${var.commit_id}"  # ID fictif mais différent à chaque commit-1
+  ami           = "ami-${var.commit_id}"  # ID fictif mais différent à chaque commit-1dcdecdevezezez
   instance_type = "t2.micro"
 
   tags = {
