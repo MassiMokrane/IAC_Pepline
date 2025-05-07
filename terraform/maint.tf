@@ -1,9 +1,3 @@
-variable "commit_id" {
-  description = "Identifiant unique pour différencier chaque instance (ex: hash du commit)"
-  type        = string
-  default     = "default"
-}
-
 provider "aws" {
   region                      = "us-east-1"
   access_key                  = "test"
@@ -17,12 +11,25 @@ provider "aws" {
   }
 }
 
+# Génère un ID aléatoire à chaque apply (force nouvelle ressource)
+resource "random_id" "commit_simulation" {
+  keepers = {
+    always_change = timestamp() # nouvelle valeur à chaque apply
+  }
+
+  byte_length = 4
+}
+
 resource "aws_instance" "demo" {
-  ami           = "ami-${var.commit_id}"  # ID fictif mais différent à chaque commit-1dcdecdevezezez
+  ami           = "ami-${random_id.commit_simulation.hex}" # fictif mais unique
   instance_type = "t2.micro"
 
   tags = {
-    Name = "Instance-${var.commit_id}"
+    Name = "Instance-${random_id.commit_simulation.hex}"
+  }
+
+  lifecycle {
+    create_before_destroy = true
   }
 }
 
